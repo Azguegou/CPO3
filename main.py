@@ -1,6 +1,5 @@
 import numpy as np
 import NeuralNetwork as nN
-import parse
 
 matrices = [
     [[1, 2, 3],
@@ -14,10 +13,5 @@ matrices = [
 ]
 print(matrices)
 nN.save(matrices)
-
-
-str = "1.000 1.2000"
-print(list(str))
-print(str.split(" "))
-print([float(i) for i in str.split(" ")])
+print(nN.load())
 
