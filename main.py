@@ -11,11 +11,10 @@ import ImageToByteArray as imageGetter
 #   np.random.rand(3, 1)
 # ]
 
-weigths, bias = NeuralNetwork.generate_random_neural_network(2, 7, 3, 1)
-print((weigths, bias))
+weights, bias = NeuralNetwork.generate_random_neural_network(2, 7, 3, 1)
+print((weights, bias))
 
-NeuralNetwork.save(weigths, bias)
+NeuralNetwork.save(weights, bias)
 
 print(NeuralNetwork.load())
-print(nN.load())
 print(imageGetter.read_image())
