@@ -1,5 +1,6 @@
 import numpy as np
 import NeuralNetwork as nN
+import ImageToByteArray as imageGetter
 
 matrices = [
     [[1, 2, 3],
@@ -14,4 +15,4 @@ matrices = [
 print(matrices)
 nN.save(matrices)
 print(nN.load())
-
+print(imageGetter.readImage())

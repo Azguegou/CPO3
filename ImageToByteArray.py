@@ -1,6 +1,8 @@
 # Read directory sorted by expected value
 #
-with open("number.png", "rb") as image:
-    img= image.read()
-    imgByte = bytearray(img)
-    print(imgByte)
+
+def readImage():
+    with open("number.png", "rb") as image:
+        img = image.read()
+        image_in_bytes = bytearray(img)
+    return image_in_bytes
