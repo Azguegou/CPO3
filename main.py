@@ -18,3 +18,5 @@ NeuralNetwork.save(weights, bias)
 
 print(NeuralNetwork.load())
 print(imageGetter.read_image())
+
+(imageGetter.load_images())
