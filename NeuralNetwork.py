@@ -1,32 +1,28 @@
 # Récupérer le txt avec la matrice de poids
 # Récupérer l'input liste de matrices
 # Renvoyer liste de matrices
-import math
-
 import numpy as np
 
 
-def save(weigths, bias):
+def write_matrix(matrix, end_base, file):
+    for x in range(len(matrix)):
+        line = matrix[x]
+        for y in range(len(matrix[x])):
+            file.write("%0.6f " % line[y])
+        file.write("\n")
+    file.write(end_base)
+
+
+def save(weights, bias):
     save_file = open("data.txt", "w")
 
-    for idMatrix in range(len(weigths)):
-        matrix = weigths[idMatrix]
-        for x in range(len(matrix)):
-            line = matrix[x]
-            for y in range(len(matrix[x])):
-                save_file.write("%0.6f " % line[y])
-            save_file.write("\n")
-        save_file.write("END_WEIGHT")
+    for idMatrix in range(len(weights)):
+        write_matrix(bias[idMatrix], "END_WEIGHT", save_file)
+
     save_file.write("END_LIST")
 
     for idMatrix in range(len(bias)):
-        matrix = bias[idMatrix]
-        for x in range(len(matrix)):
-            line = matrix[x]
-            for y in range(len(matrix[x])):
-                save_file.write("%0.6f " % line[y])
-            save_file.write("\n")
-        save_file.write("END_BIAS")
+        write_matrix(bias[idMatrix], "END_BIAS", save_file)
 
     save_file.close()
 
