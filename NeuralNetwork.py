@@ -4,13 +4,13 @@
 import numpy as np
 
 
-def write_matrix(matrix, end_base, file):
+def write_matrix(matrix, closing_tag, file):
     for x in range(len(matrix)):
         line = matrix[x]
         for y in range(len(matrix[x])):
             file.write("%0.6f " % line[y])
         file.write("\n")
-    file.write(end_base)
+    file.write(closing_tag)
 
 
 def save(weights, bias):
