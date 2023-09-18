@@ -15,4 +15,4 @@ matrices = [
 print(matrices)
 nN.save(matrices)
 print(nN.load())
-print(imageGetter.readImage())
+print(imageGetter.read_image())
