@@ -4,14 +4,6 @@ import random
 
 from PIL import Image
 
-
-def read_image(path="number.png"):
-    with open(path, "rb") as image:
-        img = image.read()
-        image_in_bytes = bytearray(img)
-    return image_in_bytes
-
-
 def read_image_to_normalized_pixels(path):
     image = Image.open(path, "r")
     return uniformize_pixel_list(
@@ -31,5 +23,4 @@ def load_images():
             mapped_answers.append((i, read_image_to_normalized_pixels("numbers/" + str(i) + "/" + file_name)))
 
     random.shuffle(mapped_answers)
-
     return mapped_answers

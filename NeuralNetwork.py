@@ -17,7 +17,7 @@ def save(weights, bias):
     save_file = open("data.txt", "w")
 
     for idMatrix in range(len(weights)):
-        write_matrix(bias[idMatrix], "END_WEIGHT", save_file)
+        write_matrix(weights[idMatrix], "END_WEIGHT", save_file)
 
     save_file.write("END_LIST")
 
@@ -61,8 +61,8 @@ def generate_random_neural_network(nb_inputs, nb_layer, nb_neurons, nb_outputs):
 
     bias_matrices = []
     for i in range(nb_layer):
-        bias_matrices.append(np.random.rand(nb_neurons, 1))
-    bias_matrices.append(np.random.rand(nb_outputs, 1))
+        bias_matrices.append(np.random.rand(1, nb_neurons))
+    bias_matrices.append(np.random.rand(1, nb_outputs))
 
     return weight_matrices, bias_matrices
 

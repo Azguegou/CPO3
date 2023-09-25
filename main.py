@@ -12,11 +12,7 @@ matrices = [
     np.random.rand(3, 1)
 ]
 
-weights, bias = neuralNetwork.generate_random_neural_network(2, 7, 3, 1)
-
-neuralNetwork.save(weights, bias)
-
-print(neuralNetwork.load())
-print(imageGetter.read_image())
-
-imageGetter.load_images()
+weights, bias = neuralNetwork.generate_random_neural_network(1024, 5, 1500, 10)
+a, b = imageGetter.load_images()[0]
+lis = neuralNetwork.forward_propagation(b, weights, bias)
+print(lis)
