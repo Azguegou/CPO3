@@ -1,69 +1,50 @@
-# Récupérer le txt avec la matrice de poids
-# Récupérer l'input liste de matrices
-# Renvoyer liste de matrices
 import numpy as np
 
 
-def write_matrix(matrix, closing_tag, file):
-    for x in range(len(matrix)):
-        line = matrix[x]
-        for y in range(len(matrix[x])):
-            file.write("%0.6f " % line[y])
-        file.write("\n")
-    file.write(closing_tag)
+def write_matrix(matrix, closing_tag, file_obj):
+    for row in matrix:
+        file_obj.write(" ".join([f"{value:.6f}" for value in row]) + "\n")
+    file_obj.write(closing_tag)
 
 
-def save(weights, bias):
-    save_file = open("data.txt", "w")
-
-    for idMatrix in range(len(weights)):
-        write_matrix(weights[idMatrix], "END_WEIGHT", save_file)
-
-    save_file.write("END_LIST")
-
-    for idMatrix in range(len(bias)):
-        write_matrix(bias[idMatrix], "END_BIAS", save_file)
-
-    save_file.close()
+def save(weights, bias, file_path):
+    with open(file_path, "w") as save_file:
+        for weight in weights:
+            write_matrix(weight, "END_WEIGHT", save_file)
+        save_file.write("END_LIST")
+        for b in bias:
+            write_matrix(b, "END_BIAS", save_file)
 
 
 def load():
     weight_list = []
     bias_list = []
 
-    file_data = open("data.txt", "r").read().split("END_LIST")
-    weight_data = file_data[0]
-    bias_data = file_data[1]
+    with open("data.txt", "r") as file_data:
+        file_data = file_data.read().split("END_LIST")
+        weight_data = file_data[0]
+        bias_data = file_data[1]
 
-    for weight in weight_data.split("END_WEIGHT")[0:-1]:
-        weight_wip = []
-        for line in weight.split("\n")[0:-1]:
-            line_wip = [float(value) for value in line.split(" ")[0:-1]]
-            weight_wip.append(line_wip)
-        weight_list.append(weight_wip)
+        for weight in weight_data.split("END_WEIGHT")[:-1]:
+            weight_list.append([[float(value) for value in line.split()] for line in weight.strip().split("\n")])
 
-    for bias in bias_data.split("END_BIAS")[0:-1]:
-        bias_wip = []
-        for line in bias.split("\n")[0:-1]:
-            line_wip = [float(value) for value in line.split(" ")[0:-1]]
-            bias_wip.append(line_wip)
-        bias_list.append(bias_wip)
+        for bias in bias_data.split("END_BIAS")[:-1]:
+            bias_list.append([[float(value) for value in line.split()] for line in bias.strip().split("\n")])
 
     return weight_list, bias_list
 
 
 def generate_random_neural_network(nb_inputs, nb_layer, nb_neurons, nb_outputs):
-    weight_matrices = [np.random.rand(nb_inputs, nb_neurons)]
+    weight_matrices = [np.random.uniform(-1, 1, (nb_inputs, nb_neurons))]
     for i in range(nb_layer - 1):
-        weight_matrices.append(np.random.rand(nb_neurons, nb_neurons))
+        weight_matrices.append(np.random.uniform(-1, 1, (nb_neurons, nb_neurons)))
 
-    weight_matrices.append(np.random.rand(nb_neurons, nb_outputs))
+    weight_matrices.append(np.random.uniform(-1, 1, (nb_neurons, nb_outputs)))
 
     bias_matrices = []
     for i in range(nb_layer):
-        bias_matrices.append(np.random.rand(1, nb_neurons))
-    bias_matrices.append(np.random.rand(1, nb_outputs))
-
+        bias_matrices.append(np.random.uniform(-1, 1, (1, nb_neurons)))
+    bias_matrices.append(np.random.uniform(-1, 1, (1, nb_outputs)))
     return weight_matrices, bias_matrices
 
 

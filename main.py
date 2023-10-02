@@ -1,18 +1,16 @@
-import numpy as np
+import os
 
+import NeuralNetwork as neuralNetwork
 import ImageToByteArray as imageGetter
-import NeuralNetwork
+import trainer as trainer
 
-matrices = [
-    np.random.rand(2, 3),
-    np.random.rand(3, 3),
-    np.random.rand(3, 3),
-    np.random.rand(3, 3),
-    np.random.rand(3, 3),
-    np.random.rand(3, 1)
-]
+nb_inputs = 1024
+nb_layers = 3
+nb_neurons = 100
+nb_outputs = 10
 
-weights, bias = NeuralNetwork.generate_random_neural_network(1024, 5, 1500, 10)
+weights, bias = neuralNetwork.generate_random_neural_network(nb_inputs, nb_layers, nb_neurons, nb_outputs)
+neuralNetwork.save(weights, bias, os.path.join(os.getcwd(), "data.txt"))
 a, b = imageGetter.load_images()[0]
-lis = NeuralNetwork.forward_propagation(b, weights, bias)
-print(lis)
+lis = neuralNetwork.forward_propagation(b, weights, bias)
+trainer.backward_propagation(a, lis, weights, bias)
