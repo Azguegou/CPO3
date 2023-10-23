@@ -3,6 +3,7 @@ import random
 from PIL import Image
 import numpy as np
 
+
 def read_image_to_normalized_pixels(path):
     image = Image.open(path, "r")
     return uniformize_pixel_list(
@@ -11,7 +12,7 @@ def read_image_to_normalized_pixels(path):
 
 
 def uniformize_pixel_list(pixel_list):
-    return [1 if pixel == (255, 255, 255) else 0 for pixel in pixel_list]
+    return np.array([[1] if pixel == (255, 255, 255) else [0] for pixel in pixel_list])
 
 
 def load_images():

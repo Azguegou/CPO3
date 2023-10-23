@@ -35,16 +35,16 @@ def load():
 
 
 def generate_random_neural_network(nb_inputs, nb_layer, nb_neurons, nb_outputs):
-    weight_matrices = [np.random.uniform(-1, 1, (nb_inputs, nb_neurons))]
+    weight_matrices = [np.random.uniform(-1, 1, (nb_neurons, nb_inputs))]
     for i in range(nb_layer - 1):
         weight_matrices.append(np.random.uniform(-1, 1, (nb_neurons, nb_neurons)))
 
-    weight_matrices.append(np.random.uniform(-1, 1, (nb_neurons, nb_outputs)))
+    weight_matrices.append(np.random.uniform(-1, 1, (nb_outputs, nb_neurons)))
 
     bias_matrices = []
     for i in range(nb_layer):
-        bias_matrices.append(np.random.uniform(-1, 1, (1, nb_neurons)))
-    bias_matrices.append(np.random.uniform(-1, 1, (1, nb_outputs)))
+        bias_matrices.append(np.random.uniform(-1, 1, (nb_neurons, 1)))
+    bias_matrices.append(np.random.uniform(-1, 1, (nb_outputs, 1)))
     return weight_matrices, bias_matrices
 
 
@@ -54,6 +54,37 @@ def sigmoid(x):
 
 def forward_propagation(inputs, weights, bias):
     sol = inputs
+    activations = []
     for i in range(len(weights)):
-        sol = sigmoid(np.dot(sol, weights[i]) + bias[i])
-    return sol
+        sol = sigmoid(np.dot(weights[i], sol) + bias[i])
+        activations.append(sol)
+    return activations
+
+
+def get_gradients_previous_layer(weight, dz, previous_activation, coef):
+    previous_dz = np.dot(weight.T, dz) * previous_activation * (1 - previous_activation)
+    return previous_dz, coef * np.dot(previous_dz, previous_activation.T), coef * np.sum(previous_dz, axis=1,
+                                                                                         keepdims=True)
+
+
+def get_first_dz(y, sol):
+    return sol - y
+
+
+def get_gradients(x, y, activations, weights):
+    coef = 1
+    depth = len(activations)
+    dz = get_first_dz(activations[-1], y)
+    gradients_weight = []
+    gradients_bias = []
+
+    for i in range(depth - 1):
+        dz, gradient_weight, gradient_bias = get_gradients_previous_layer(weights[-(i + 1)], dz, activations[-(i + 2)], coef)
+        gradients_weight.append(gradient_weight)
+        gradients_bias.append(gradient_bias)
+
+    dz, gradient_weight, gradient_bias = get_gradients_previous_layer(weights[0], dz, x, coef)
+    gradients_weight.append(gradient_weight)
+    gradients_bias.append(gradient_bias)
+
+    return gradients_weight, gradients_bias
