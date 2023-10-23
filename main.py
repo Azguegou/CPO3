@@ -13,4 +13,4 @@ weights, bias = neuralNetwork.generate_random_neural_network(nb_inputs, nb_layer
 neuralNetwork.save(weights, bias, os.path.join(os.getcwd(), "data.txt"))
 a, b = imageGetter.load_images()[0]
 activations = neuralNetwork.forward_propagation(b, weights, bias)
-print(neuralNetwork.get_gradients(b, a, activations, weights))
+print(trainer.get_gradients(b, a, activations, weights))
