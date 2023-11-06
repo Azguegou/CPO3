@@ -38,13 +38,13 @@ def generate_random_neural_network(nb_inputs, nb_layer, nb_neurons, nb_outputs):
     weight_matrices = [np.random.uniform(-1, 1, (nb_neurons, nb_inputs))]
     for i in range(nb_layer - 1):
         weight_matrices.append(np.random.uniform(-1, 1, (nb_neurons, nb_neurons)))
-
     weight_matrices.append(np.random.uniform(-1, 1, (nb_outputs, nb_neurons)))
 
     bias_matrices = []
     for i in range(nb_layer):
         bias_matrices.append(np.random.uniform(-1, 1, (nb_neurons, 1)))
     bias_matrices.append(np.random.uniform(-1, 1, (nb_outputs, 1)))
+
     return weight_matrices, bias_matrices
 
 
