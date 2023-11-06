@@ -16,7 +16,7 @@ def prep_pixels(train, test):
 
 
 def training_set():
-    trainX, trainY, testX, testY = load_dataset()
+    trainX, trainY = load_dataset()
     train_norm_X = prep_pixels(trainX)
     train_norm_Y = prep_pixels(trainY)
     return train_norm_X, train_norm_Y
