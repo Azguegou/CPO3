@@ -1,8 +1,8 @@
 import numpy as np
 
 def get_gradients_previous_layer(weight, dz, previous_activation, coef):
-    previous_dz = np.dot(weight.T, dz) * previous_activation * (1 - previous_activation)
-    return previous_dz, coef * np.dot(previous_dz, previous_activation.T), coef * np.sum(previous_dz, axis=1,
+    previous_dz = np.dot(weight.T, dz) * previous_activation * (1.0 - previous_activation)
+    return previous_dz, coef * np.dot(dz, previous_activation.T), coef * np.sum(dz, axis=1,
                                                                                          keepdims=True)
 
 
@@ -11,7 +11,7 @@ def get_first_dz(y, sol):
 
 
 def get_gradients(x, y, activations, weights):
-    coef = 1
+    coef = 0.01
     depth = len(activations)
     dz = get_first_dz(activations[-1], y)
     gradients_weight = []
